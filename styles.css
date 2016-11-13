@@ -1,0 +1,104 @@
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 2em 3em;
+}
+
+div.state-box {
+	display: inline-block;
+	background-color: #EEF;
+	margin: 10px;
+	padding: 15px;
+	text-align: center;
+	vertical-align: bottom;
+	border: 5px solid black;
+}
+
+div.state-box.voted-r {
+	border-color: #CC0000;
+}
+
+div.state-box.voted-d {
+	border-color: #0000CC;
+}
+
+div.state-box > p {
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+div.state-box > p.hidden {
+	display: none;
+	font-size: 18px;
+}
+
+div.state-box:hover > p.electors {
+	margin-top: -10px;
+}
+
+div.state-box:hover > p.hidden {
+	display: block;
+	margin-left: -10px;
+}
+
+div.state-box:hover > p.label {
+	display: none;
+}
+
+#tabular {
+    border-collapse: collapse;
+    margin-top: 100px;
+}
+
+#tabular thead {
+	background-color: #DEDEDE;
+}
+
+#tabular td,
+#tabular th {
+	border: 1px solid #BBB;
+	padding: 5px 10px;
+}
+
+#tabular tbody tr:nth-child(even) {
+	background-color: #DDDDEE;
+}
+
+#tabular tbody tr:hover {
+	background-color: #FFFFCC;
+}
+
+#tabular td.cell_electors,
+#tabular td.cell_population,
+#tabular td.cell_votingage,
+#tabular td.cell_eligible {
+	text-align: center;
+}
+
+#buttons {
+	background-color: #CCDDEE;
+	padding: 5px 25px;
+	border: 2px solid #EEE;
+}
+
+button {
+    padding: .5em .875em;
+    background-color: #fff;
+    border: 2px solid #000099;
+    border-radius: .25em;
+    margin: 0;
+    vertical-align: middle;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[disabled] {
+		color: #FFF;
+		background-color: #000066;
+		border-color: #000099;
+}
