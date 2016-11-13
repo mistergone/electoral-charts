@@ -1,0 +1,217 @@
+<html>
+<head>
+	<title>Electoral College Chart</title>
+	<style type="text/css">
+
+body {
+	font-family: Arial, sans-serif;
+}
+
+div.state-box {
+	display: inline-block;
+	background-color: #EEF;
+	margin: 10px;
+	padding: 15px;
+	text-align: center;
+	vertical-align: bottom;
+	border: 5px solid black;
+}
+
+div.state-box.voted-r {
+	border-color: #CC0000;
+}
+
+div.state-box.voted-d {
+	border-color: #0000CC;
+}
+
+div.state-box > p {
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+div.state-box > p.hidden {
+	display: none;
+	font-size: 18px;
+}
+
+div.state-box:hover > p.electors {
+	margin-top: -10px;
+}
+
+div.state-box:hover > p.hidden {
+	display: block;
+	margin-left: -10px;
+}
+
+div.state-box:hover > p.label {
+	display: none;
+}
+
+#tabular {
+    border-collapse: collapse;
+    margin-top: 100px;
+}
+
+#tabular thead {
+	background-color: #DEDEDE;
+}
+
+#tabular td,
+#tabular th {
+	border: 1px solid #BBB;
+	padding: 5px 10px;
+}
+
+#tabular tbody tr:nth-child(even) {
+	background-color: #DDDDEE;
+}
+
+#tabular tbody tr:hover {
+	background-color: #FFFFCC;
+}
+
+#tabular td.cell_electors,
+#tabular td.cell_population,
+#tabular td.cell_ratio {
+	text-align: center;
+}
+
+
+	</style>
+	<script type="text/Javascript" src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript">
+	$( document ).ready( function() {
+
+
+function commaSeparate( numberString ) {
+
+  var string = numberString.toString(),
+      // split string of number by the decimal point
+      parts = string.split( '.' ),
+      // format the whole number part of the string with a regex
+      formattedValue = parts[0].replace( /(\d)(?=(\d{3})+(?!\d))/g, '$1,' );
+  // Add back decimal part if it exists
+  if ( typeof parts[1] !== 'undefined' ) {
+    formattedValue += '.' + parts[1];
+  }
+
+  return formattedValue;
+}
+
+var data =
+[ 
+	{ state: 'Alabama', ratio: 1.078971369, electors: '9', population: '4,802,982', voted: 'R' },
+	{ state: 'Alaska', ratio: 2.394139463, electors: '3', population: '721,523', voted: 'R' },
+	{ state: 'Arizona', ratio: 0.9877115497, electors: '11', population: '6,412,700', voted: 'R' },
+	{ state: 'Arkansas', ratio: 1.180650378, electors: '6', population: '2,926,229', voted: 'R' },
+	{ state: 'California', ratio: 0.8480932624, electors: '55', population: '37,341,989', voted: 'D' },
+	{ state: 'Colorado', ratio: 1.027225366, electors: '9', population: '5,044,930', voted: 'D' },
+	{ state: 'Connecticut', ratio: 1.125371555, electors: '7', population: '3,581,628', voted: 'D' },
+	{ state: 'Delaware', ratio: 1.917494495, electors: '3', population: '900,877', voted: 'D' },
+	{ state: 'District of Columbia', ratio: 2.870800497, electors: '3', population: '601,723', voted: 'D' },
+	{ state: 'Florida', ratio: 0.8834801614, electors: '29', population: '18,900,773', voted: 'R' },
+	{ state: 'Georgia', ratio: 0.9470963584, electors: '16', population: '9,727,566', voted: 'R' },
+	{ state: 'Hawaii', ratio: 1.68505349, electors: '4', population: '1,366,862', voted: 'D' },
+	{ state: 'Idaho', ratio: 1.463766792, electors: '4', population: '1,573,499', voted: 'R' },
+	{ state: 'Illinois', ratio: 0.8951988295, electors: '20', population: '12,864,380', voted: 'D' },
+	{ state: 'Indiana', ratio: 0.9742087164, electors: '11', population: '6,501,582', voted: 'R' },
+	{ state: 'Iowa', ratio: 1.131334103, electors: '6', population: '3,053,787', voted: 'R' },
+	{ state: 'Kansas', ratio: 1.206382322, electors: '6', population: '2,863,813', voted: 'R' },
+	{ state: 'Kentucky', ratio: 1.058811386, electors: '8', population: '4,350,606', voted: 'R' },
+	{ state: 'Louisiana', ratio: 1.011530436, electors: '8', population: '4,553,962', voted: 'R' },
+	{ state: 'Maine', ratio: 1.727762738, electors: '4', population: '1,333,074', voted: 'D' },
+	{ state: 'Maryland', ratio: 0.9945007891, electors: '10', population: '5,789,929', voted: 'D' },
+	{ state: 'Massachusetts', ratio: 0.9655856103, electors: '11', population: '6,559,644', voted: 'D' },
+	{ state: 'Michigan', ratio: 0.9295086734, electors: '16', population: '9,911,626', voted: 'R' },
+	{ state: 'Minnesota', ratio: 1.083390414, electors: '10', population: '5,314,879', voted: 'D' },
+	{ state: 'Mississippi', ratio: 1.16003189, electors: '6', population: '2,978,240', voted: 'R' },
+	{ state: 'Missouri', ratio: 0.9578491278, electors: '10', population: '6,011,478', voted: 'R' },
+	{ state: 'Montana', ratio: 1.737126804, electors: '3', population: '994,416', voted: 'R' },
+	{ state: 'Nebraska', ratio: 1.571680963, electors: '5', population: '1,831,825', voted: 'R' },
+	{ state: 'Nevada', ratio: 1.275120902, electors: '6', population: '2,709,432', voted: 'D' },
+	{ state: 'New Hampshire', ratio: 1.742967421, electors: '4', population: '1,321,445', voted: 'D' },
+	{ state: 'New Jersey', ratio: 0.9152794354, electors: '14', population: '8,807,501', voted: 'D' },
+	{ state: 'New Mexico', ratio: 1.392677445, electors: '5', population: '2,067,273', voted: 'D' },
+	{ state: 'New York', ratio: 0.8598120947, electors: '29', population: '19,421,055', voted: 'D' },
+	{ state: 'North Carolina', ratio: 0.9029198388, electors: '15', population: '9,565,781', voted: 'R' },
+	{ state: 'North Dakota', ratio: 2.555724085, electors: '3', population: '675,905', voted: 'R' },
+	{ state: 'Ohio', ratio: 0.8959298618, electors: '18', population: '11,568,495', voted: 'R' },
+	{ state: 'Oklahoma', ratio: 1.070594582, electors: '7', population: '3,764,882', voted: 'R' },
+	{ state: 'Oregon', ratio: 1.047304471, electors: '7', population: '3,848,606', voted: 'D' },
+	{ state: 'Pennsylvania', ratio: 0.9043002612, electors: '20', population: '12,734,905', voted: 'R' },
+	{ state: 'Rhode Island', ratio: 2.182650681, electors: '4', population: '1,055,247', voted: 'D' },
+	{ state: 'South Carolina', ratio: 1.115434341, electors: '9', population: '4,645,975', voted: 'R' },
+	{ state: 'South Dakota', ratio: 2.107232093, electors: '3', population: '819,761', voted: 'R' },
+	{ state: 'Tennessee', ratio: 0.9934854373, electors: '11', population: '6,375,431', voted: 'R' },
+	{ state: 'Texas', ratio: 0.8659322497, electors: '38', population: '25,268,418', voted: 'R' },
+	{ state: 'Utah', ratio: 1.246895127, electors: '6', population: '2,770,765', voted: 'R' },
+	{ state: 'Vermont', ratio: 2.740481183, electors: '3', population: '630,337', voted: 'D' },
+	{ state: 'Virginia', ratio: 0.9312965301, electors: '13', population: '8,037,736', voted: 'D' },
+	{ state: 'Washington', ratio: 1.023149594, electors: '12', population: '6,753,369', voted: 'D' },
+	{ state: 'West Virginia', ratio: 1.548027347, electors: '5', population: '1,859,815', voted: 'R' },
+	{ state: 'Wisconsin', ratio: 1.010504834, electors: '10', population: '5,698,230', voted: 'R' },
+	{ state: 'Wyoming', ratio: 3.039638726, electors: '3', population: '568,300', voted: 'R' },
+];
+
+for ( var x=0; x < data.length; x++ ) {
+	var row = data[x],
+		rowHtml = '<tr>',
+		population = row.population.replace(/\D/g,''),
+		ratio = commaSeparate( Math.round( population / (+row.electors) ) );
+	rowHtml += '<td class="cell_state"><strong>' + row.state + '</strong></td>';
+	rowHtml += '<td class="cell_electors">' + row.electors + '</td>';
+	rowHtml += '<td class="cell_population">' + row.population + '</td>';
+	rowHtml += '<td class="cell_ratio">' + ratio + '</td>';
+	rowHtml += '</tr>'
+	$( '#tabular tbody' ).append( rowHtml );
+}
+
+var body = d3.select('#container')
+	.selectAll('div')
+		.data(
+			data.sort( function(x, y) {
+				return d3.descending( x.ratio, y.ratio )
+			} )
+		).enter()
+		.append('div')
+			.attr('class',
+				function(d) { return 'state-box voted-' + d.voted.toLowerCase(); } )
+			.style('width', function(d) { return ( d.ratio * 200 ) + "px" } )
+			.style('height', function(d) { return Math.max((d.ratio * 10), 20) + 'px'} )
+		    .style('background-color', function(d) {return 'rgb(' + (d.ratio * 50) + ',0,0)'} )
+		    .style('font-size', function(d) { return Math.max((d.ratio * 10), 16) + 'px'})
+		    .html( function(d) {
+		    	var content = '<p class="label"><strong>' + d.state + '</strong></p>';
+		    	content += '<p class="electors hidden">Electors: ' + d.electors + '</p>';
+		    	content += '<p class="population hidden">Population: ' + d.population + '</p>';
+		    	return content;
+		    } );
+	} );
+
+
+
+	</script>
+</head>
+<body>
+	<h1>Electoral Impact</h1>
+	<p>This visualization shows the "electoral impact" of each state. The size (width) of each states box is relative to it's population divided by its electoral college votes. Thus, each voter in the larger-impact states could be considered to have "more impact" in the presidential election than the smaller-impact states. Hover over each state for more inforation. (Note: While the states are colored as they voted in 2016 (Red for Republican, Blue for Democrat), Nebraska and Maine do not commit all their electoral votes to one candidate necessarily.) A table of the data is available below the boxes.</p>
+
+<div id="container">
+</div>
+
+<table id="tabular">
+	<thead>
+		<tr>
+			<th>State</th>
+			<th>Electoral College Votes</th>
+			<th>Population</th>
+			<th>Ratio, Population per Electoral College Vote</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</body>
+</html>
