@@ -41,6 +41,7 @@ function renderTable( ) {
     rowHtml += '<td class="cell_population">' + commaSeparate( row.population ) + '</td>';
     rowHtml += '<td class="cell_votingage">' + commaSeparate( row.votingage ) + '</td>';
     rowHtml += '<td class="cell_eligible">' + commaSeparate( row.eligible ) + '</td>';
+    rowHtml += '<td class="cell_eligible">' + commaSeparate( row.turnout ) + '</td>';
     rowHtml += '</tr>'
     $( '#tabular tbody' ).append( rowHtml );
   }
@@ -50,7 +51,8 @@ function drawIt( dataset ) {
   var weightKeys = {
     total: 'voteweight',
     eligible: 'eligibleweight',
-    votingage: 'votingageweight'
+    votingage: 'votingageweight',
+    turnout: 'turnoutweight'
   };
   var weight = weightKeys[dataset];
   $( '#container div.state-box' ).remove();
