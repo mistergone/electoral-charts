@@ -68,10 +68,7 @@ div.state-box:hover > p.label {
 	background-color: #FFFFCC;
 }
 
-#tabular td.cell_electors,
-#tabular td.cell_population,
-#tabular td.cell_votingage,
-#tabular td.cell_eligible {
+#tabular td.cell_centered {
 	text-align: center;
 }
 

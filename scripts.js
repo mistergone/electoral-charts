@@ -37,11 +37,14 @@ function renderTable( ) {
         ratio = commaSeparate( Math.round( population / (+row.electors) ) );
 
     rowHtml += '<td class="cell_state"><strong>' + row.state + '</strong></td>';
-    rowHtml += '<td class="cell_electors">' + row.electors + '</td>';
-    rowHtml += '<td class="cell_population">' + commaSeparate( row.population ) + '</td>';
-    rowHtml += '<td class="cell_votingage">' + commaSeparate( row.votingage ) + '</td>';
-    rowHtml += '<td class="cell_eligible">' + commaSeparate( row.eligible ) + '</td>';
-    rowHtml += '<td class="cell_eligible">' + commaSeparate( row.turnout ) + '</td>';
+    rowHtml += '<td class="cell_centered cell_electors">' + row.electors + '</td>';
+    rowHtml += '<td class="cell_centered cell_population">' + commaSeparate( row.population ) + '</td>';
+    rowHtml += '<td class="cell_centered cell_votingage">' + commaSeparate( row.votingage );
+    rowHtml += ' (' + Math.round( row.votingage / row.population * 100 )  + '%)</td>';
+    rowHtml += '<td class="cell_centered cell_eligible">' + commaSeparate( row.eligible );
+    rowHtml += ' (' + Math.round( row.eligible / row.population * 100 )  + '%)</td>';
+    rowHtml += '<td class="cell_centered cell_turnout">' + commaSeparate( row.turnout );
+    rowHtml += ' (' + Math.round( row.turnout / row.population * 100 )  + '%)</td>';
     rowHtml += '</tr>'
     $( '#tabular tbody' ).append( rowHtml );
   }
