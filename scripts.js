@@ -1,4 +1,10 @@
-var data = [];
+var data = [],
+    weights = {
+      population: {},
+      eligible: {},
+      votingage: {},
+      turnout: {}
+    };
 
 function commaSeparate( numberString ) {
 
@@ -30,6 +36,7 @@ function parseText( string ) {
 }
 
 function renderTable( ) {
+
   for ( var x=0; x < data.length; x++ ) {
     var row = data[x],
         rowHtml = '<tr>',
@@ -51,9 +58,35 @@ function renderTable( ) {
   }
 }
 
+function fillWeights() {
+  var keys = ['population', 'eligible', 'votingage', 'turnout' ];
+  $.each( data, function() {
+    for ( var x=0; x < keys.length; x++ ) {
+      weights[keys[x]][this.state] = this[keys[x] + 'weight'];
+    }
+  } );
+}
+
+function compareIt( dataset ) {
+  var baseState = $( '#base-state option:selected' ).val(),
+      comparedState = $( '#compared-state option:selected' ).val(),
+      baseWeight = weights[dataset][baseState],
+      comparedWeight = weights[dataset][comparedState],
+      voteRatio = ( baseWeight / comparedWeight ),
+      voteText = " votes";
+
+  voteRatio = Math.round( ( voteRatio * 100 ) ) / 100;
+
+  if ( voteRatio === 1 ) {
+    voteText = " vote";
+  }
+
+  $( '#weighted-value' ).text( voteRatio + voteText );
+}
+
 function drawIt( dataset ) {
   var weightKeys = {
-    total: 'voteweight',
+    population: 'populationweight',
     eligible: 'eligibleweight',
     votingage: 'votingageweight',
     turnout: 'turnoutweight'
@@ -81,6 +114,11 @@ function drawIt( dataset ) {
            content += '<p class="population hidden">Population: ' + commaSeparate( d.population ) + '</p>';
            return content;
          } );
+
+    // with data sorted by ratio, make the worst comparison
+
+    $( '#base-state').val( data[0].state );
+    $( '#compared-state').val( data[data.length - 1].state );
 }
 
 $( document ).ready( function() {
@@ -100,18 +138,32 @@ $( document ).ready( function() {
       }
     } );
 
+    fillWeights();
     renderTable();
+  	drawIt( 'population' );
+    compareIt( 'population' );
 
-  	drawIt( 'total' );
-    $( '#buttons button[data-data_set="total"]' ).attr( 'disabled', true );
+    $( '#viz-buttons button[data-data_set="population"]' ).attr( 'disabled', true );
+    $( '#com-buttons button[data-data_set="population"]' ).attr( 'disabled', true );
 
   }
   });
 
-  $( '#buttons button' ).click( function() {
-    $( '#buttons button' ).attr( 'disabled', false );
+  $( '#viz-buttons button' ).click( function() {
+    $( '#viz-buttons button' ).attr( 'disabled', false );
     $( this ).attr( 'disabled', true );
     drawIt( $( this ).attr( 'data-data_set' ) );
+  } );
+
+  $( '#com-buttons button' ).click( function() {
+    $( '#com-buttons button' ).attr( 'disabled', false );
+    $( this ).attr( 'disabled', true );
+    compareIt( $( this ).attr( 'data-data_set' ) );
+  } );
+
+  $( '#comparator' ).change( function() {
+    var dataset = $( '#com-buttons button[disabled]').attr( 'data-data_set' );
+    compareIt( dataset );
   } );
 
 } );

@@ -8,13 +8,137 @@
 </head>
 <body>
 	<h1>Electoral Impact</h1>
+	<p>This page offers data visualizations and comparisons of "vote weight." Due to the way electoral college votes are determined, votes in some states are "worth more" than votes in other states. This page seeks to illustrate those "vote weights".</p>
+	<hr>
+	<h2 id="header_comparison">Vote Weight Comparison</h2>
+	<p>Directly compare weight of a vote in one state versus another.</p>
+	<div id="comparator">
+		<p><strong class="embiggened">1 vote</strong> in
+			<select id="base-state">
+				<option value="Alabama">Alabama</option>
+				<option value="Alaska">Alaska</option>
+				<option value="Arizona">Arizona</option>
+				<option value="Arkansas">Arkansas</option>
+				<option value="California">California</option>
+				<option value="Colorado">Colorado</option>
+				<option value="Connecticut">Connecticut</option>
+				<option value="Delaware">Delaware</option>
+				<option value="District of Columbia">District of Columbia</option>
+				<option value="Florida">Florida</option>
+				<option value="Georgia">Georgia</option>
+				<option value="Hawaii">Hawaii</option>
+				<option value="Idaho">Idaho</option>
+				<option value="Illinois">Illinois</option>
+				<option value="Indiana">Indiana</option>
+				<option value="Iowa">Iowa</option>
+				<option value="Kansas">Kansas</option>
+				<option value="Kentucky">Kentucky</option>
+				<option value="Louisiana">Louisiana</option>
+				<option value="Maine">Maine</option>
+				<option value="Maryland">Maryland</option>
+				<option value="Massachusetts">Massachusetts</option>
+				<option value="Michigan">Michigan</option>
+				<option value="Minnesota">Minnesota</option>
+				<option value="Mississippi">Mississippi</option>
+				<option value="Missouri">Missouri</option>
+				<option value="Montana">Montana</option>
+				<option value="Nebraska">Nebraska</option>
+				<option value="Nevada">Nevada</option>
+				<option value="New Hampshire">New Hampshire</option>
+				<option value="New Jersey">New Jersey</option>
+				<option value="New Mexico">New Mexico</option>
+				<option value="New York">New York</option>
+				<option value="North Carolina">North Carolina</option>
+				<option value="North Dakota">North Dakota</option>
+				<option value="Ohio">Ohio</option>
+				<option value="Oklahoma">Oklahoma</option>
+				<option value="Oregon">Oregon</option>
+				<option value="Pennsylvania">Pennsylvania</option>
+				<option value="Rhode Island">Rhode Island</option>
+				<option value="South Carolina">South Carolina</option>
+				<option value="South Dakota">South Dakota</option>
+				<option value="Tennessee">Tennessee</option>
+				<option value="Texas">Texas</option>
+				<option value="Utah">Utah</option>
+				<option value="Vermont">Vermont</option>
+				<option value="Virginia">Virginia</option>
+				<option value="Washington">Washington</option>
+				<option value="West Virginia">West Virginia</option>
+				<option value="Wisconsin">Wisconsin</option>
+				<option value="Wyoming">Wyoming</option>
+			</select>
+			is worth <strong class="embiggened"><span id="weighted-value">1 vote</span></strong> in
+			<select id="compared-state">
+				<option value="Alabama">Alabama</option>
+				<option value="Alaska">Alaska</option>
+				<option value="Arizona">Arizona</option>
+				<option value="Arkansas">Arkansas</option>
+				<option value="California">California</option>
+				<option value="Colorado">Colorado</option>
+				<option value="Connecticut">Connecticut</option>
+				<option value="Delaware">Delaware</option>
+				<option value="District of Columbia">District of Columbia</option>
+				<option value="Florida">Florida</option>
+				<option value="Georgia">Georgia</option>
+				<option value="Hawaii">Hawaii</option>
+				<option value="Idaho">Idaho</option>
+				<option value="Illinois">Illinois</option>
+				<option value="Indiana">Indiana</option>
+				<option value="Iowa">Iowa</option>
+				<option value="Kansas">Kansas</option>
+				<option value="Kentucky">Kentucky</option>
+				<option value="Louisiana">Louisiana</option>
+				<option value="Maine">Maine</option>
+				<option value="Maryland">Maryland</option>
+				<option value="Massachusetts">Massachusetts</option>
+				<option value="Michigan">Michigan</option>
+				<option value="Minnesota">Minnesota</option>
+				<option value="Mississippi">Mississippi</option>
+				<option value="Missouri">Missouri</option>
+				<option value="Montana">Montana</option>
+				<option value="Nebraska">Nebraska</option>
+				<option value="Nevada">Nevada</option>
+				<option value="New Hampshire">New Hampshire</option>
+				<option value="New Jersey">New Jersey</option>
+				<option value="New Mexico">New Mexico</option>
+				<option value="New York">New York</option>
+				<option value="North Carolina">North Carolina</option>
+				<option value="North Dakota">North Dakota</option>
+				<option value="Ohio">Ohio</option>
+				<option value="Oklahoma">Oklahoma</option>
+				<option value="Oregon">Oregon</option>
+				<option value="Pennsylvania">Pennsylvania</option>
+				<option value="Rhode Island">Rhode Island</option>
+				<option value="South Carolina">South Carolina</option>
+				<option value="South Dakota">South Dakota</option>
+				<option value="Tennessee">Tennessee</option>
+				<option value="Texas">Texas</option>
+				<option value="Utah">Utah</option>
+				<option value="Vermont">Vermont</option>
+				<option value="Virginia">Virginia</option>
+				<option value="Washington">Washington</option>
+				<option value="West Virginia">West Virginia</option>
+				<option value="Wisconsin">Wisconsin</option>
+				<option value="Wyoming">Wyoming</option>
+			</select>.</p>
+			<div id="com-buttons">
+				<p><strong>The following data sets are available for this comparison</strong></p>
+				<button data-data_set="population">Total State Population</button>
+				<button data-data_set="votingage">Only Voting Age Voters</button>
+				<button data-data_set="eligible">Only Eligible Voters</button>
+				<button data-data_set="turnout">2016 Turnout</button>
+				<p><em>"Eligible" includes voters of voting age who are not ineligible because of felony convictions. 2016 "Turnout" numbers are based on current estimates.</em></p>
+			</div>
+	</div>
+	<hr>
+	<h2 id="header_visualization">Vote Weight Visualization</h2>
 	<p>This visualization shows the "electoral impact" of each state. The size (width) of each state's box is relative to it's population divided by its electoral college votes. (Technically, each state's box width is determined by the proportion of the state's electoral votes divided by its population relative to the the total electoral votes in the US divided by the US total population, just to be absolutely clear.) Thus, each voter in the larger-impact states could be considered to have "more impact" in the presidential election than the smaller-impact states.</p>
 
 	<p>Hover over each state for more inforation. (Note: While the states are colored as they voted in 2016 (Red for Republican, Blue for Democrat), Nebraska and Maine do not commit all their electoral votes to one candidate necessarily.) A <a href="#tabular">table of the data</a> is available below the boxes.</p>
 
-<div id="buttons">
+<div id="viz-buttons">
 	<p><strong>Decide which data to use:</strong></p>
-	<button data-data_set="total">Total Population</button>
+	<button data-data_set="population">Total State Population</button>
 	<button data-data_set="votingage">Only Voting Age Voters</button>
 	<button data-data_set="eligible">Only Eligible Voters</button>
 	<button data-data_set="turnout">2016 Turnout</button>
@@ -23,7 +147,8 @@
 
 <div id="container">
 </div>
-
+<hr>
+<h2 id="header_tabular">Tabular Data</h2>
 <table id="tabular">
 	<thead>
 		<tr>
@@ -39,5 +164,7 @@
 	<tbody>
 	</tbody>
 </table>
+<hr>
+<p>Created by Chuck Werner. Open source code <a href="https://github.com/mistergone/electoral-charts" target="_blank">is available here</a>. Questions or comments can be sent to "mistergone" on the gmail thing.</p>
 </body>
 </html>

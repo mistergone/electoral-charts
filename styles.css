@@ -4,6 +4,17 @@ body {
 	margin: 2em 3em;
 }
 
+#comparator {
+	background-color: #CCDDEE;
+	padding: 5px 25px;
+	border: 2px solid #EEE;
+}
+
+#comparator select {
+	font-size: 1.2em;
+	padding: 2px;
+}
+
 div.state-box {
 	display: inline-block;
 	background-color: #EEF;
@@ -47,7 +58,6 @@ div.state-box:hover > p.label {
 
 #tabular {
     border-collapse: collapse;
-    margin-top: 100px;
 }
 
 #tabular thead {
@@ -72,7 +82,7 @@ div.state-box:hover > p.label {
 	text-align: center;
 }
 
-#buttons {
+#viz-buttons {
 	background-color: #CCDDEE;
 	padding: 5px 25px;
 	border: 2px solid #EEE;
@@ -98,4 +108,13 @@ button[disabled] {
 		color: #FFF;
 		background-color: #000066;
 		border-color: #000099;
+}
+
+strong.embiggened {
+	font-size: 1.4em;
+}
+
+hr {
+	height: 2px;
+	margin: 50px 0 25px; 
 }
