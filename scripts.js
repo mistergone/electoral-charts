@@ -73,12 +73,12 @@ function compareIt( dataset ) {
       baseWeight = weights[dataset][baseState],
       comparedWeight = weights[dataset][comparedState],
       voteRatio = ( baseWeight / comparedWeight ),
-      voteText = " votes";
+      voteText = " voters";
 
   voteRatio = Math.round( ( voteRatio * 100 ) ) / 100;
 
   if ( voteRatio === 1 ) {
-    voteText = " vote";
+    voteText = " voter";
   }
 
   $( '#weighted-value' ).text( voteRatio + voteText );
