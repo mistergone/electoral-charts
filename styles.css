@@ -5,10 +5,39 @@ body {
 }
 
 #comparator {
+	display: inline-block;
 	background-color: #CCDDEE;
 	padding: 5px 25px;
-	border: 2px solid #EEE;
 }
+
+#comparator-graph {
+	background-color: #CCDDEE;
+	padding: 5px 25px;
+}
+
+#comparator-graph div.row {
+	margin-bottom: 10px;
+}
+
+#comparator-graph div.cell {
+	color: #001155;
+	display: inline-block;
+	line-height: 24px;
+	height: 24px;
+	text-align: right;
+	padding-right: 5px;
+	vertical-align: bottom;
+	width: 20em;
+}
+
+#comparator-graph .com-graph_bar {
+	display: inline-block;
+	background-color: #005599;
+	height: 20px;
+	width: 100px;
+	border: 2px solid #001155;
+}
+
 
 #comparator select {
 	font-size: 1.2em;

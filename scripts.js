@@ -81,7 +81,16 @@ function compareIt( dataset ) {
     voteText = " voter";
   }
 
+  $( '#com-graph_base-state' ).text( baseState );
+  $( '#com-graph_comp-state' ).text( comparedState );
   $( '#weighted-value' ).text( voteRatio + voteText );
+
+  drawComparison( baseWeight, comparedWeight );
+}
+
+function drawComparison( base, compared ) {
+  $( '#com-graph_base-bar' ).css( 'width', base * 100 + 'px');
+  $( '#com-graph_comp-bar' ).css( 'width', compared * 100 + 'px');
 }
 
 function drawIt( dataset ) {
