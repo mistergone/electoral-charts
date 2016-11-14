@@ -72,7 +72,7 @@ function drawIt( dataset ) {
          .html( function(d) {
            var content = '<p class="label"><strong>' + d.state + '</strong></p>';
            content += '<p class="electors hidden">Electors: ' + d.electors + '</p>';
-           content += '<p class="population hidden">Population: ' + d.population + '</p>';
+           content += '<p class="population hidden">Population: ' + commaSeparate( d.population ) + '</p>';
            return content;
          } );
 }
@@ -93,10 +93,12 @@ $( document ).ready( function() {
         data.push( obj );
       }
     } );
+
+    renderTable();
+
   	drawIt( 'total' );
     $( '#buttons button[data-data_set="total"]' ).attr( 'disabled', true );
 
-    renderTable();
   }
   });
 
