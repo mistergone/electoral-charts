@@ -124,7 +124,12 @@ function drawIt( dataset ) {
            return content;
          } );
 
-    // with data sorted by ratio, make the worst comparison
+    // sorted data by ratio, then compare the endpoint states
+
+    data.sort( function( x, y ) {
+      return d3.descending( x[weight], y[weight] );
+    } );
+
 
     $( '#base-state').val( data[0].state );
     $( '#compared-state').val( data[data.length - 1].state );

@@ -36,6 +36,7 @@ body {
 	height: 20px;
 	width: 100px;
 	border: 2px solid #001155;
+	transition: width 0.5s ease-in-out;
 }
 
 
@@ -52,6 +53,7 @@ div.state-box {
 	text-align: center;
 	vertical-align: bottom;
 	border: 5px solid black;
+	transition: width 0.5s;
 }
 
 div.state-box.voted-r {
