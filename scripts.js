@@ -67,7 +67,7 @@ function fillWeights() {
   } );
 }
 
-function compareIt( dataset ) {
+function compareStates( dataset ) {
   var baseState = $( '#base-state option:selected' ).val(),
       comparedState = $( '#compared-state option:selected' ).val(),
       baseWeight = weights[dataset][baseState],
@@ -93,7 +93,7 @@ function drawComparison( base, compared ) {
   $( '#com-graph_comp-bar' ).css( 'width', compared * 100 + 'px');
 }
 
-function drawIt( dataset ) {
+function drawStateBoxes( dataset ) {
   var weightKeys = {
     population: 'populationweight',
     eligible: 'eligibleweight',
@@ -104,25 +104,25 @@ function drawIt( dataset ) {
   $( '#container div.state-box' ).remove();
 
   var body = d3.select('#container')
-  .selectAll('div')
-    .data(
-      data.sort( function(x, y) {
-        return d3.descending( x[weight], y[weight] )
-      } )
-    ).enter()
-    .append('div')
-      .attr('class',
-        function(d) { return 'state-box voted-' + d.voted.toLowerCase(); } )
-      .style('width', function(d) { return ( d[weight] * 200 ) + "px" } )
-      .style('height', function(d) { return Math.max((d[weight] * 10), 20) + 'px'} )
-         .style('background-color', function(d) {return 'rgb(' + (d[weight] * 50) + ',0,0)'} )
-         .style('font-size', function(d) { return Math.max((d[weight] * 10), 16) + 'px'})
-         .html( function(d) {
-           var content = '<p class="label"><strong>' + d.state + '</strong></p>';
-           content += '<p class="electors hidden">Electors: ' + d.electors + '</p>';
-           content += '<p class="population hidden">Population: ' + commaSeparate( d.population ) + '</p>';
-           return content;
-         } );
+    .selectAll('div')
+      .data(
+        data.sort( function(x, y) {
+          return d3.descending( x[weight], y[weight] )
+        } )
+      ).enter()
+      .append('div')
+        .attr('class',
+          function(d) { return 'state-box voted-' + d.voted.toLowerCase(); } )
+        .style('width', function(d) { return ( d[weight] * 200 ) + "px" } )
+        .style('height', function(d) { return Math.max((d[weight] * 10), 20) + 'px'} )
+           .style('background-color', function(d) {return 'rgb(' + (d[weight] * 50) + ',0,0)'} )
+           .style('font-size', function(d) { return Math.max((d[weight] * 10), 16) + 'px'})
+           .html( function(d) {
+             var content = '<p class="label"><strong>' + d.state + '</strong></p>';
+             content += '<p class="electors hidden">Electors: ' + d.electors + '</p>';
+             content += '<p class="population hidden">Population: ' + commaSeparate( d.population ) + '</p>';
+             return content;
+           } );
 
     // sorted data by ratio, then compare the endpoint states
 
@@ -154,8 +154,8 @@ $( document ).ready( function() {
 
     fillWeights();
     renderTable();
-  	drawIt( 'population' );
-    compareIt( 'population' );
+  	drawStateBoxes( 'population' );
+    compareStates( 'population' );
 
     $( '#viz-buttons button[data-data_set="population"]' ).attr( 'disabled', true );
     $( '#com-buttons button[data-data_set="population"]' ).attr( 'disabled', true );
@@ -166,18 +166,18 @@ $( document ).ready( function() {
   $( '#viz-buttons button' ).click( function() {
     $( '#viz-buttons button' ).attr( 'disabled', false );
     $( this ).attr( 'disabled', true );
-    drawIt( $( this ).attr( 'data-data_set' ) );
+    drawStateBoxes( $( this ).attr( 'data-data_set' ) );
   } );
 
   $( '#com-buttons button' ).click( function() {
     $( '#com-buttons button' ).attr( 'disabled', false );
     $( this ).attr( 'disabled', true );
-    compareIt( $( this ).attr( 'data-data_set' ) );
+    compareStates( $( this ).attr( 'data-data_set' ) );
   } );
 
   $( '#comparator' ).change( function() {
     var dataset = $( '#com-buttons button[disabled]').attr( 'data-data_set' );
-    compareIt( dataset );
+    compareStates( dataset );
   } );
 
 } );
